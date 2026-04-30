@@ -1,4 +1,5 @@
 from flask import Flask
+from flask import render_template
 
 app = Flask(__name__)
 
@@ -20,7 +21,7 @@ def contact():
 
 @app.route("/services")
 def services():
-    return "Our Services"  
+    return render_template("home.html")  
 
 @app.route("/test_int/<int:a>")
 def test_int(a):
