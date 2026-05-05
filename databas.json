@@ -1,0 +1,14 @@
+[
+    {
+        "name": "mazid",
+        "email": "majidmugal7737713356@gmail.com",
+        "password": "1111",
+        "confirm_password": "1111"
+    },
+    {
+        "name": "khan",
+        "email": "khans@gmail.com",
+        "password": "1111",
+        "confirm_password": "11111"
+    }
+]
