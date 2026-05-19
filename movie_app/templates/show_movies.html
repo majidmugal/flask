@@ -1,0 +1,40 @@
+{% extends 'base.html' %} {% block title %} this is My Movie App {% endblock %}
+{% block content %}
+
+<div class="container mt-5">
+  <h2 class="text-center mb-5 text-primary fw-bold">movie app</h2>
+
+  <div class="row">
+    {% for x in data %}
+
+    <div class="col-md-4 mb-4">
+      <div class="card shadow-lg border-0 rounded-4 h-100">
+        <div class="card-body d-flex flex-column">
+          <h4 class="card-title text-light fw-bold mb-3">{{ x.name }}</h4>
+
+          <p class="card-text text-secondary">{{ x.description }}</p>
+          <strong
+            ><p class="card-text text-secondary">{{ x.rating }}</p></strong
+          >
+          <strong
+            ><p class="card-text text-secondary">{{ x.duration }}</p></strong
+          >
+
+          <div class="mt-auto d-flex gap-2">
+            <a href="/display/{{x.id}}" class="btn btn-primary w-50"> view </a>
+
+            <a href="/update_blog/{{x.id}}" class="btn btn-primary w-50"
+              >update</a
+            >
+
+            <a href="/delete/{{x.id}}" class="btn btn-danger w-50"> Delete </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}

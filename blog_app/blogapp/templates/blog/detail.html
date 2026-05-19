@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ blog.title }} - Flask Blog{% endblock %}
+
+{% block content %}
+<article class="blog-post mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h1 class="display-4 fw-bold mb-3">{{ blog.title }}</h1>
+            <p class="text-muted border-bottom pb-3 mb-4">
+                By <span class="fw-bold">{{ blog.author.username }}</span> on {{ blog.created_at.strftime('%B %d, %Y') }}
+            </p>
+            
+            <div class="blog-content mb-5 lead" style="white-space: pre-wrap;">
+                {{ blog.content }}
+            </div>
+
+            {% if current_user.is_authenticated and (current_user.is_admin or blog.author == current_user) %}
+            <div class="d-flex gap-2 border-top pt-4">
+                <a href="{{ url_for('blog.edit_blog', blog_id=blog.id) }}" class="btn btn-outline-primary">Edit Post</a>
+                <form method="POST" action="{{ url_for('blog.delete_blog', blog_id=blog.id) }}" onsubmit="return confirm('Are you sure you want to delete this post?');">
+                    <button type="submit" class="btn btn-outline-danger">Delete Post</button>
+                </form>
+            </div>
+            {% endif %}
+            
+            <div class="mt-5">
+                <a href="{{ url_for('blog.index') }}" class="text-decoration-none">&larr; Back to all posts</a>
+            </div>
+        </div>
+    </div>
+</article>
+{% endblock %}

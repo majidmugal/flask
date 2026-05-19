@@ -92,5 +92,49 @@ def search():
     return render_template("Search.html")
 
 
+
+
+@app.route("/list_students")
+def list_students():
+    data = user.query.all()
+    return render_template("list_students.html", fe_data = data)
+
+
+
+
+@app.route("/update_student/<int:student_id>",methods = ["GET", 'POST'])
+def update_student(student_id):
+
+    data = user.query.filter(user.id == student_id).first()
+    if data:
+        pass
+    else:
+        return f"student not found with {student_id}"
+
+    if request.method == "POST":
+
+        if request.form.get("name"):
+            data.name = request.form.get("name")
+
+        if request.form.get("email"):
+            data.email = request.form.get("email")
+
+        if request.form.get("password"):
+            data.password = request.form.get("password")
+
+        if request.form.get("collage"):
+            data.collage = request.form.get("collage")
+
+        db.session.add(data)
+        db.session.commit()
+
+
+        return "User updated succesfully"
+    
+    return render_template("update_student.html", student_id = student_id)
+    
+   
+
+
    
     

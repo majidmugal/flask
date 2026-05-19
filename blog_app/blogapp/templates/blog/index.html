@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Flask Blog{% endblock %}
+
+{% block content %}
+<div class="row">
+  {% for blog in blogs %}
+  <div class="col-md-6 mb-4">
+    <div class="card h-100 shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title"><a href="{{ url_for('blog.blog_detail', blog_id=blog.id) }}" class="text-decoration-none">{{ blog.title }}</a></h5>
+        <p class="card-text text-muted">Posted on {{ blog.created_at.strftime('%b %d, %Y') }}</p>
+        <p class="card-text">{{ blog.content[:200] }}{% if blog.content|length > 200 %}...{% endif %}</p>
+        {% if current_user.is_authenticated and (current_user.is_admin or blog.author == current_user) %}
+        <a href="{{ url_for('blog.edit_blog', blog_id=blog.id) }}" class="btn btn-sm btn-outline-primary me-2">Edit</a>
+        <form method="POST" action="{{ url_for('blog.delete_blog', blog_id=blog.id) }}" class="d-inline" onsubmit="return confirm('Delete this post?');">
+          <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+        </form>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% else %}
+  <p class="text-center fst-italic">No blog posts available.</p>
+  {% endfor %}
+</div>
+{% if current_user.is_authenticated %}
+<div class="d-grid gap-2 mt-4">
+  <a href="{{ url_for('blog.create_blog') }}" class="btn btn-success btn-lg">Create New Blog Post</a>
+</div>
+{% endif %}
+{% endblock %}
